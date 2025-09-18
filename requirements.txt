@@ -5,4 +5,6 @@ pymongo>4.0
 certifi
 pymongo[srv]
 scikit-learn
+dill
+pyyaml
 #-e .
