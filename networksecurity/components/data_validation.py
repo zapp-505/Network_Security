@@ -1,7 +1,7 @@
 from networksecurity.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 from networksecurity.entity.config_entity import DataValidationConfig
 from networksecurity.exception.exception import NetworkSecurityException
-from networksecurity.logging.logger import logging
+import logging
 from networksecurity.constant.training_pipeline import SCHEMA_FILE_PATH
 from scipy.stats import ks_2samp
 import pandas as pd
@@ -26,7 +26,7 @@ class DataValidation:
     
     def validate_number_of_columns(self,dataframe:pd.DataFrame):
         try:
-            number_of_columns=len(self._schema_config)
+            number_of_columns=len(self.schema_config)
             logging.info(f"Required number of columns:{number_of_columns}")
             logging.info(f"Data frame has columns:{len(dataframe.columns)}")
             if len(dataframe.columns)==number_of_columns:
@@ -68,6 +68,7 @@ class DataValidation:
             dir_path = os.path.dirname(drift_report_file_path)
             os.makedirs(dir_path,exist_ok=True)
             write_yaml_file(file_path=drift_report_file_path,content=report)
+            return status
 
         except Exception as e:
             raise NetworkSecurityException(e,sys)
@@ -87,7 +88,7 @@ class DataValidation:
             if not status:
                 error_message=f"Test dataframe does not contain all columns.\n"   
             
-            status_col=self.if_nuemerical_columns(test_dataframe)
+            status_col=self.if_nuemerical_columns(train_dataframe)
             if not status_col:
                 error_message=f"Train dataframe does not contain nuemerical columns.\n"
             status = self.if_nuemerical_columns(dataframe=test_dataframe)
@@ -107,10 +108,12 @@ class DataValidation:
                 self.data_validation_config.valid_test_file_path, index=False, header=True
             )
             
+            # TODO: Implement proper valid/invalid file logic based on validation results
+            # For now, always point to original ingested files
             data_validation_artifact = DataValidationArtifact(
                 validation_status=status,
-                valid_train_file_path=self.data_ingestion_artifact.trained_file_path,
-                valid_test_file_path=self.data_ingestion_artifact.test_file_path,
+                valid_train_file_path=self.data_validation_config.valid_train_file_path,
+                valid_test_file_path=self.data_validation_config.valid_test_file_path,
                 invalid_train_file_path=None,
                 invalid_test_file_path=None,
                 drift_report_file_path=self.data_validation_config.drift_report_file_path,
