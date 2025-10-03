@@ -1,2 +1,109 @@
-venv
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+*.virtualenv
+
+# Environment Variables
 .env
+.env.local
+.env.*.local
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Machine Learning & Data
+Artifacts/
+artifacts/
+logs/
+*.pkl
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.pth
+*.pt
+*.joblib
+*.npy
+*.npz
+*.csv
+*.parquet
+!Network_Data/*.csv
+final_model/
+models/
+checkpoints/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Data & Temporary Files
+*.db
+*.sqlite
+*.sqlite3
+temp/
+tmp/
+*.tmp
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Documentation
+*.pdf
+*.docx
+
+# Secrets & Credentials
+*.pem
+*.key
+*.cert
+credentials.json
+secrets/
+
+# Dagshub / Git LFS
+.dvc/
+*.dvc
+
+# Testing
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Distribution / Packaging
+*.whl
+pip-log.txt
+pip-delete-this-directory.txt
